@@ -5,7 +5,11 @@ import { Image, TextInput, TouchableOpacity, View } from "react-native"
 
 import { useDebouncedCallback } from "use-debounce"
 
-const Search = () => {
+interface SearchProps {
+  onFilterPress: () => void
+}
+
+const Search = ({ onFilterPress }: SearchProps) => {
   const path = usePathname()
   const params = useLocalSearchParams<{ query?: string }>()
   const [search, setSearch] = useState(params.query || "")
@@ -29,7 +33,7 @@ const Search = () => {
           className="text-sm font-rubik text-black-300 ml-2 flex-1"
         />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onFilterPress}>
         <Image source={icons.filter} className="size-5" />
       </TouchableOpacity>
     </View>

@@ -1,12 +1,24 @@
 import { Card, FeaturedCard } from "@/components/cards"
+import { FilterBottomSheet } from "@/components/FilterBottomSheet"
 import Filters from "@/components/filters"
 import Search from "@/components/search"
 import icons from "@/constants/icons"
 import { useAuthStore } from "@/stores/authStore"
+import { useState } from "react"
 import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 
 const HomeScreen = () => {
   const { user } = useAuthStore()
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+
+  const handleCloseFilter = () => {
+    setIsFilterOpen(false)
+  }
+
+  const handleApplyFilters = (filters: any) => {
+    console.log("Applied filters:", filters)
+    // TODO: Apply filters to search results
+  }
 
   return (
     <SafeAreaView className="h-full pt-16 bg-white">
@@ -31,7 +43,7 @@ const HomeScreen = () => {
               <Image source={icons.bell} className="size-6"></Image>
             </View>
 
-            <Search />
+            <Search onFilterPress={() => setIsFilterOpen(true)} />
 
             <View className="my-5">
               <View className="flex flex-row items-center justify-between">
@@ -65,6 +77,9 @@ const HomeScreen = () => {
           </View>
         }
       />
+
+      {/* Filter Bottom Sheet - Rendered at root level */}
+      <FilterBottomSheet isVisible={isFilterOpen} onClose={handleCloseFilter} onApplyFilters={handleApplyFilters} />
     </SafeAreaView>
   )
 }

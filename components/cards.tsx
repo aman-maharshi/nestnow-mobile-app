@@ -28,7 +28,7 @@ export const ExploreCard = ({ onPress }: Props) => {
       <View className="flex-1 ml-3 flex flex-row justify-between py-2">
         <View className="flex-1 flex flex-col justify-between">
           {/* Title */}
-          <Text className="text-xl font-rubik-bold text-black-300 leading-7" numberOfLines={2}>
+          <Text className="text-xl font-rubik-semibold text-black-300 leading-7" numberOfLines={2}>
             Lucky Lake Apartments
           </Text>
 
