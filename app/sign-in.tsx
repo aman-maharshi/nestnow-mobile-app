@@ -5,10 +5,18 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import icons from "@/constants/icons"
 import images from "@/constants/images"
 import { router } from "expo-router"
+import { useAuthStore } from "../stores/authStore"
 
 const SignIn = () => {
+  const { login, isLoading } = useAuthStore()
+
   const handleLogin = async () => {
-    router.push("/(tabs)")
+    try {
+      await login()
+      router.replace("/(tabs)")
+    } catch (error) {
+      console.error("Authentication failed:", error)
+    }
   }
 
   return (
@@ -28,11 +36,14 @@ const SignIn = () => {
 
           <TouchableOpacity
             onPress={handleLogin}
-            className="bg-white shadow-md shadow-zinc-300 border border-gray-100 rounded-full w-full py-4 mt-5"
+            disabled={isLoading}
+            className={`bg-white shadow-md shadow-zinc-300 border border-gray-100 rounded-full w-full py-4 mt-5 ${isLoading ? "opacity-50" : ""}`}
           >
             <View className="flex-row justify-center items-center">
               <Image source={icons.google} className="h-5 w-5" resizeMode="contain" />
-              <Text className="text-lg font-rubik-medium text-black-300 ml-4">Continue with Google</Text>
+              <Text className="text-lg font-rubik-medium text-black-300 ml-4">
+                {isLoading ? "Signing in..." : "Continue with Google"}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>

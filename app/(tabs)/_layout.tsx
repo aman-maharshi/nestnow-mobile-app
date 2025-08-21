@@ -1,7 +1,8 @@
 import icons from "@/constants/icons"
-import { Tabs } from "expo-router"
-import React from "react"
+import { Tabs, router } from "expo-router"
+import React, { useEffect } from "react"
 import { Image, Text, View } from "react-native"
+import { useAuthStore } from "../../stores/authStore"
 
 const TabIcon = ({ focused, icon, title }: { focused: boolean; icon: any; title: string }) => {
   return (
@@ -17,6 +18,20 @@ const TabIcon = ({ focused, icon, title }: { focused: boolean; icon: any; title:
 }
 
 const BottomTabs = () => {
+  const { isAuthenticated } = useAuthStore()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      // Redirect to sign-in if not authenticated
+      router.replace("/sign-in")
+    }
+  }, [isAuthenticated])
+
+  // Don't render tabs if not authenticated
+  if (!isAuthenticated) {
+    return null
+  }
+
   return (
     <Tabs
       screenOptions={{
