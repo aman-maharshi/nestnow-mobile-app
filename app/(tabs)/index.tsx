@@ -2,8 +2,10 @@ import { Card, FeaturedCard } from "@/components/cards"
 import { FilterBottomSheet } from "@/components/FilterBottomSheet"
 import Filters from "@/components/filters"
 import Search from "@/components/search"
+import { featured, ourRecommendation } from "@/constants/data"
 import icons from "@/constants/icons"
 import { useAuthStore } from "@/stores/authStore"
+import { router } from "expo-router"
 import { useState } from "react"
 import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 
@@ -17,15 +19,14 @@ const HomeScreen = () => {
 
   const handleApplyFilters = (filters: any) => {
     console.log("Applied filters:", filters)
-    // TODO: Apply filters to search results
   }
 
   return (
     <SafeAreaView className="h-full pt-16 bg-white">
       <FlatList
-        data={[1, 2, 3, 4]}
-        renderItem={({ item }) => <Card />}
-        keyExtractor={item => item.toString()}
+        data={ourRecommendation}
+        renderItem={({ item }) => <Card data={item} />}
+        keyExtractor={item => item.id.toString()}
         numColumns={2}
         contentContainerClassName="pb-32"
         columnWrapperClassName="px-5 flex gap-5"
@@ -48,15 +49,15 @@ const HomeScreen = () => {
             <View className="my-5">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-xl font-rubik-bold text-black-300">Featured</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push("/explore")}>
                   <Text className="text-base font-rubik-bold text-primary-300">See All</Text>
                 </TouchableOpacity>
               </View>
 
               <FlatList
-                data={[1, 2, 3, 4]}
-                renderItem={({ item }) => <FeaturedCard />}
-                keyExtractor={item => item.toString()}
+                data={featured}
+                renderItem={({ item }) => <FeaturedCard data={item} />}
+                keyExtractor={item => item.id.toString()}
                 horizontal={true}
                 bounces={false}
                 showsHorizontalScrollIndicator={false}
@@ -67,7 +68,7 @@ const HomeScreen = () => {
             <View className="my-5">
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-xl font-rubik-bold text-black-300">Our Recommendation</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push("/explore")}>
                   <Text className="text-base font-rubik-bold text-primary-300">See All</Text>
                 </TouchableOpacity>
               </View>
