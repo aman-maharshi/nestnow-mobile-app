@@ -1,3 +1,4 @@
+import images from "@/constants/images"
 import { create } from "zustand"
 
 interface AuthState {
@@ -23,7 +24,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({
         isAuthenticated: true,
         isLoading: false,
-        user: { id: "1", name: "Demo User" }
+        user: { id: "1", name: "Aman Maharshi", avatar: images.avatar }
       })
     } catch (error) {
       console.error("Authentication failed:", error)

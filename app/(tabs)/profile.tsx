@@ -1,5 +1,5 @@
 import { router } from "expo-router"
-import { Button, Text, View } from "react-native"
+import { Button, Image, Text, View } from "react-native"
 import { useAuthStore } from "../../stores/authStore"
 
 export default function Profile() {
@@ -16,6 +16,7 @@ export default function Profile() {
 
       {user && (
         <View className="items-center">
+          {user.avatar && <Image source={user.avatar} className="w-24 h-24 rounded-full mb-4" resizeMode="cover" />}
           <Text className="text-lg font-rubik-medium text-black-200">Welcome, {user.name}!</Text>
           <Text className="text-sm font-rubik text-gray-500">User ID: {user.id}</Text>
         </View>
