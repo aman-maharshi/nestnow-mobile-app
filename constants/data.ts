@@ -36,6 +36,159 @@ export const cards = [
   }
 ]
 
+export const featured = [
+  {
+    id: 1,
+    title: "Luxury Penthouse",
+    location: "Manhattan, New York",
+    price: "$8,500",
+    rating: 4.9,
+    image: images.newYork,
+    category: "penthouse"
+  },
+  {
+    id: 2,
+    title: "Modern Villa",
+    location: "Beverly Hills, LA",
+    price: "$12,000",
+    rating: 4.8,
+    image: images.japan,
+    category: "villa"
+  },
+  {
+    id: 3,
+    title: "Waterfront Condo",
+    location: "Miami Beach, FL",
+    price: "$6,200",
+    rating: 4.7,
+    image: images.london,
+    category: "condo"
+  },
+  {
+    id: 4,
+    title: "Historic Townhouse",
+    location: "Georgetown, DC",
+    price: "$9,800",
+    rating: 4.6,
+    image: images.mumbai,
+    category: "townhouse"
+  }
+]
+
+export const ourRecommendation = [
+  {
+    id: 1,
+    title: "Cozy Studio",
+    location: "Brooklyn, NY",
+    price: "$2,800",
+    rating: 4.5,
+    image: images.italy,
+    category: "studio"
+  },
+  {
+    id: 2,
+    title: "Family House",
+    location: "Austin, TX",
+    price: "$4,200",
+    rating: 4.4,
+    image: images.kashmir,
+    category: "house"
+  },
+  {
+    id: 3,
+    title: "Downtown Loft",
+    location: "Chicago, IL",
+    price: "$3,600",
+    rating: 4.3,
+    image: images.london,
+    category: "loft"
+  },
+  {
+    id: 4,
+    title: "Garden Apartment",
+    location: "Seattle, WA",
+    price: "$3,100",
+    rating: 4.2,
+    image: images.mumbai,
+    category: "apartment"
+  }
+]
+
+export const allProperties = [
+  {
+    id: 1,
+    title: "Luxury Penthouse",
+    location: "Manhattan, New York",
+    price: "$8,500",
+    rating: 4.9,
+    image: images.newYork,
+    category: "penthouse"
+  },
+  {
+    id: 2,
+    title: "Modern Villa",
+    location: "Beverly Hills, LA",
+    price: "$12,000",
+    rating: 4.8,
+    image: images.japan,
+    category: "villa"
+  },
+  {
+    id: 3,
+    title: "Waterfront Condo",
+    location: "Miami Beach, FL",
+    price: "$6,200",
+    rating: 4.7,
+    image: images.london,
+    category: "condo"
+  },
+  {
+    id: 4,
+    title: "Historic Townhouse",
+    location: "Georgetown, DC",
+    price: "$9,800",
+    rating: 4.6,
+    image: images.mumbai,
+    category: "townhouse"
+  },
+  {
+    id: 5,
+    title: "Cozy Studio",
+    location: "Brooklyn, NY",
+    price: "$2,800",
+    rating: 4.5,
+    image: images.italy,
+    category: "studio"
+  },
+  {
+    id: 6,
+    title: "Family House",
+    location: "Austin, TX",
+    price: "$4,200",
+    rating: 4.4,
+    image: images.kashmir,
+    category: "house"
+  },
+  {
+    id: 7,
+    title: "Downtown Loft",
+    location: "Chicago, IL",
+    price: "$3,600",
+    rating: 4.3,
+    image: images.london,
+    category: "loft"
+  },
+  {
+    id: 8,
+    title: "Garden Apartment",
+    location: "Seattle, WA",
+    price: "$3,100",
+    rating: 4.2,
+    image: images.mumbai,
+    category: "apartment"
+  }
+]
+
 export const featuredCards = [
   {
     title: "Featured 1",
