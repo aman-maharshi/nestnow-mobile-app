@@ -1,6 +1,8 @@
+import { Ionicons } from "@expo/vector-icons"
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet"
-import React, { useCallback, useMemo, useRef } from "react"
-import { Text, TextInput, TouchableOpacity, View } from "react-native"
+import Slider from "@react-native-community/slider"
+import React, { useCallback, useMemo, useRef, useState } from "react"
+import { Text, TouchableOpacity, View } from "react-native"
 
 interface FilterBottomSheetProps {
   isVisible: boolean
@@ -14,11 +16,12 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
   const snapPoints = useMemo(() => ["60%", "80%", "100%"], [])
 
   // State for filter values
-  const [filters, setFilters] = React.useState({
-    minPrice: "",
-    maxPrice: "",
-    propertyType: "",
-    bedrooms: ""
+  const [filters, setFilters] = useState({
+    price: 500,
+    propertyTypes: ["Apartments", "Townhomes"],
+    bedrooms: 2,
+    bathrooms: 1,
+    buildingSize: 2000
   })
 
   // Open/close bottom sheet based on isVisible prop
@@ -39,8 +42,39 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
     onClose()
   }, [filters, onApplyFilters, onClose])
 
-  const updateFilter = (key: string, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }))
+  const togglePropertyType = (type: string) => {
+    setFilters(prev => ({
+      ...prev,
+      propertyTypes: prev.propertyTypes.includes(type)
+        ? prev.propertyTypes.filter(t => t !== type)
+        : [...prev.propertyTypes, type]
+    }))
+  }
+
+  const incrementBedrooms = () => {
+    setFilters(prev => ({ ...prev, bedrooms: Math.min(prev.bedrooms + 1, 10) }))
+  }
+
+  const decrementBedrooms = () => {
+    setFilters(prev => ({ ...prev, bedrooms: Math.max(prev.bedrooms - 1, 0) }))
+  }
+
+  const incrementBathrooms = () => {
+    setFilters(prev => ({ ...prev, bathrooms: Math.min(prev.bathrooms + 1, 10) }))
+  }
+
+  const decrementBathrooms = () => {
+    setFilters(prev => ({ ...prev, bathrooms: Math.max(prev.bathrooms - 1, 0) }))
+  }
+
+  const resetFilters = () => {
+    setFilters({
+      price: 500,
+      propertyTypes: [],
+      bedrooms: 0,
+      bathrooms: 0,
+      buildingSize: 2000
+    })
   }
 
   const renderBackdrop = useCallback(
@@ -71,54 +105,60 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
         onClose={handleClose}
       >
         <BottomSheetView className="flex-1 px-5">
-          <View className="flex-row items-center justify-between mb-6">
-            <Text className="text-xl font-rubik-bold text-black-300">Filters</Text>
-            <TouchableOpacity onPress={handleClose}>
-              <Text className="text-primary-300 font-rubik-medium">Done</Text>
+          {/* Header */}
+          <View className="flex-row items-center justify-between mb-6 mt-2">
+            <TouchableOpacity
+              onPress={handleClose}
+              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
+            >
+              <Ionicons name="arrow-back" size={20} color="#374151" />
+            </TouchableOpacity>
+            <Text className="text-xl font-rubik-bold text-gray-800">Filter</Text>
+            <TouchableOpacity onPress={resetFilters}>
+              <Text className="text-primary-300 font-rubik-medium">Reset</Text>
             </TouchableOpacity>
           </View>
 
           {/* Price Range */}
           <View className="mb-6">
-            <Text className="text-base font-rubik-bold text-black-300 mb-3">Price Range</Text>
-            <View className="flex-row items-center justify-between">
-              <View className="flex-1 mr-3">
-                <Text className="text-sm font-rubik text-black-200 mb-1">Min Price</Text>
-                <TextInput
-                  value={filters.minPrice}
-                  onChangeText={value => updateFilter("minPrice", value)}
-                  placeholder="$0"
-                  className="border border-gray-200 rounded-lg px-3 py-2 text-black-300 font-rubik"
-                  keyboardType="numeric"
-                />
-              </View>
-              <View className="flex-1">
-                <Text className="text-sm font-rubik text-black-200 mb-1">Max Price</Text>
-                <TextInput
-                  value={filters.maxPrice}
-                  onChangeText={value => updateFilter("maxPrice", value)}
-                  placeholder="$10,000"
-                  className="border border-gray-200 rounded-lg px-3 py-2 text-black-300 font-rubik"
-                  keyboardType="numeric"
-                />
+            <Text className="text-lg font-rubik-bold text-gray-800 mb-4">Price Range</Text>
+            <View className="relative">
+              <Slider
+                style={{ width: "100%", height: 40 }}
+                minimumValue={0}
+                maximumValue={1000}
+                value={filters.price}
+                onValueChange={value => setFilters(prev => ({ ...prev, price: Math.round(value) }))}
+                minimumTrackTintColor="#0061ff"
+                maximumTrackTintColor="#e5e7eb"
+                thumbTintColor="#0061ff"
+              />
+
+              {/* Price value */}
+              <View className="flex-row justify-center mt-2">
+                <Text className="text-lg font-rubik-bold text-gray-800">${filters.price}</Text>
               </View>
             </View>
           </View>
 
           {/* Property Type */}
           <View className="mb-6">
-            <Text className="text-base font-rubik-bold text-black-300 mb-3">Property Type</Text>
-            <View className="flex-row flex-wrap gap-2">
-              {["Apartment", "House", "Studio", "Villa", "Condo"].map(type => (
+            <Text className="text-lg font-rubik-bold text-gray-800 mb-4">Property Type</Text>
+            <View className="flex-row flex-wrap gap-3">
+              {["Apartments", "Townhomes", "Homes", "Condos", "Duplexes", "Studios"].map(type => (
                 <TouchableOpacity
                   key={type}
-                  onPress={() => updateFilter("propertyType", type)}
-                  className={`px-4 py-2 border rounded-full ${
-                    filters.propertyType === type ? "border-primary-300 bg-primary-100" : "border-primary-200"
+                  onPress={() => togglePropertyType(type)}
+                  className={`px-4 py-2 rounded-full border ${
+                    filters.propertyTypes.includes(type)
+                      ? "bg-primary-300 border-primary-300"
+                      : "bg-white border-gray-300"
                   }`}
                 >
                   <Text
-                    className={`text-sm font-rubik ${filters.propertyType === type ? "text-primary-300" : "text-primary-300"}`}
+                    className={`text-sm font-rubik ${
+                      filters.propertyTypes.includes(type) ? "text-white" : "text-gray-700"
+                    }`}
                   >
                     {type}
                   </Text>
@@ -127,31 +167,76 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
             </View>
           </View>
 
-          {/* Bedrooms */}
+          {/* Home Details */}
           <View className="mb-6">
-            <Text className="text-base font-rubik-bold text-black-300 mb-3">Bedrooms</Text>
-            <View className="flex-row flex-wrap gap-2">
-              {["1", "2", "3", "4", "5+"].map(bed => (
+            <Text className="text-lg font-rubik-bold text-gray-800 mb-4">Home Details</Text>
+
+            {/* Bedrooms */}
+            <View className="flex-row items-center justify-between mb-4">
+              <Text className="text-base font-rubik text-gray-700">Bedrooms</Text>
+              <View className="flex-row items-center">
                 <TouchableOpacity
-                  key={bed}
-                  onPress={() => updateFilter("bedrooms", bed)}
-                  className={`px-4 py-2 border rounded-full ${
-                    filters.bedrooms === bed ? "border-primary-300 bg-primary-100" : "border-primary-200"
-                  }`}
+                  onPress={decrementBedrooms}
+                  className="w-8 h-8 bg-gray-100 rounded-full items-center justify-center"
                 >
-                  <Text
-                    className={`text-sm font-rubik ${filters.bedrooms === bed ? "text-primary-300" : "text-primary-300"}`}
-                  >
-                    {bed}
-                  </Text>
+                  <Ionicons name="remove" size={16} color="#374151" />
                 </TouchableOpacity>
-              ))}
+                <Text className="text-lg font-rubik-bold text-gray-800 mx-4">{filters.bedrooms}</Text>
+                <TouchableOpacity
+                  onPress={incrementBedrooms}
+                  className="w-8 h-8 bg-gray-100 rounded-full items-center justify-center"
+                >
+                  <Ionicons name="add" size={16} color="#374151" />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Bathrooms */}
+            <View className="flex-row items-center justify-between">
+              <Text className="text-base font-rubik text-gray-700">Bathrooms</Text>
+              <View className="flex-row items-center">
+                <TouchableOpacity
+                  onPress={decrementBathrooms}
+                  className="w-8 h-8 bg-gray-100 rounded-full items-center justify-center"
+                >
+                  <Ionicons name="remove" size={16} color="#374151" />
+                </TouchableOpacity>
+                <Text className="text-lg font-rubik-bold text-gray-800 mx-4">{filters.bathrooms}</Text>
+                <TouchableOpacity
+                  onPress={incrementBathrooms}
+                  className="w-8 h-8 bg-gray-100 rounded-full items-center justify-center"
+                >
+                  <Ionicons name="add" size={16} color="#374151" />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
 
-          {/* Apply Filters Button */}
-          <TouchableOpacity onPress={handleApplyFilters} className="bg-primary-300 py-3 rounded-lg mb-4">
-            <Text className="text-white text-center font-rubik-bold">Apply Filters</Text>
+          {/* Building Size */}
+          <View className="mb-8">
+            <Text className="text-lg font-rubik-bold text-gray-800 mb-4">Building Size</Text>
+            <View className="relative">
+              <Slider
+                style={{ width: "100%", height: 40 }}
+                minimumValue={0}
+                maximumValue={5000}
+                value={filters.buildingSize}
+                onValueChange={value => setFilters(prev => ({ ...prev, buildingSize: Math.round(value) }))}
+                minimumTrackTintColor="#0061ff"
+                maximumTrackTintColor="#e5e7eb"
+                thumbTintColor="#0061ff"
+              />
+
+              {/* Size value */}
+              <View className="flex-row justify-center mt-2">
+                <Text className="text-lg font-rubik-bold text-gray-800">{filters.buildingSize} sq ft</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Set Filter Button */}
+          <TouchableOpacity onPress={handleApplyFilters} className="bg-primary-300 py-4 rounded-xl mb-4">
+            <Text className="text-white text-center font-rubik-bold text-lg">Set Filter</Text>
           </TouchableOpacity>
         </BottomSheetView>
       </BottomSheet>
