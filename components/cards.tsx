@@ -1,5 +1,6 @@
 import icons from "@/constants/icons"
 import images from "@/constants/images"
+import { router } from "expo-router"
 import React from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 
@@ -8,9 +9,17 @@ interface Props {
 }
 
 export const ExploreCard = ({ onPress }: Props) => {
+  const handlePress = () => {
+    if (onPress) {
+      onPress()
+    } else {
+      router.push("/properties/1")
+    }
+  }
+
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={handlePress}
       className="flex flex-row bg-white rounded-xl shadow-lg shadow-black-100/20 p-3 mb-4 mx-5"
     >
       {/* Left Section - Image */}
@@ -49,8 +58,16 @@ export const ExploreCard = ({ onPress }: Props) => {
 }
 
 export const FeaturedCard = ({ onPress }: Props) => {
+  const handlePress = () => {
+    if (onPress) {
+      onPress()
+    } else {
+      router.push("/properties/1")
+    }
+  }
+
   return (
-    <TouchableOpacity onPress={onPress} className="flex flex-col items-start w-60 h-80 relative">
+    <TouchableOpacity onPress={handlePress} className="flex flex-col items-start w-60 h-80 relative">
       <Image source={images.japan} className="size-full rounded-2xl" />
       <Image source={images.cardGradient} className="size-full rounded-2xl absolute bottom-0" />
 
@@ -75,9 +92,17 @@ export const FeaturedCard = ({ onPress }: Props) => {
 }
 
 export const Card = ({ onPress }: Props) => {
+  const handlePress = () => {
+    if (onPress) {
+      onPress()
+    } else {
+      router.push("/properties/1")
+    }
+  }
+
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={handlePress}
       className="flex-1 w-full px-3 py-4 rounded-lg bg-white shadow-lg shadow-black-100/70 relative mb-4"
     >
       <View className="absolute top-5 right-5 flex flex-row items-center px-2 bg-white/90 py-1 rounded-full z-50">
