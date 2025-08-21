@@ -1,4 +1,5 @@
 import icons from "@/constants/icons"
+import { Ionicons } from "@expo/vector-icons"
 import { router, useLocalSearchParams, usePathname } from "expo-router"
 import React, { useState } from "react"
 import { Image, TextInput, TouchableOpacity, View } from "react-native"
@@ -34,7 +35,8 @@ const Search = ({ onFilterPress }: SearchProps) => {
         />
       </View>
       <TouchableOpacity onPress={onFilterPress}>
-        <Image source={icons.filter} className="size-5" />
+        {/* <Image source={icons.filter} className="size-5" /> */}
+        <Ionicons name="filter-circle-outline" size={24} color="#0061ff" />
       </TouchableOpacity>
     </View>
   )

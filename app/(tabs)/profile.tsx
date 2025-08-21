@@ -1,28 +1,80 @@
-import { router } from "expo-router"
-import { Button, Image, Text, View } from "react-native"
-import { useAuthStore } from "../../stores/authStore"
+import { Alert, Image, ImageSourcePropType, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
 
-export default function Profile() {
+import { settings } from "@/constants/data"
+import icons from "@/constants/icons"
+import { useAuthStore } from "@/stores/authStore"
+import { router } from "expo-router"
+
+interface SettingsItemProp {
+  icon: ImageSourcePropType
+  title: string
+  onPress?: () => void
+  textStyle?: string
+  showArrow?: boolean
+}
+
+const SettingsItem = ({ icon, title, onPress, textStyle, showArrow = true }: SettingsItemProp) => (
+  <TouchableOpacity onPress={onPress} className="flex flex-row items-center justify-between py-3">
+    <View className="flex flex-row items-center gap-3">
+      <Image source={icon} className="size-6" />
+      <Text className={`text-lg font-rubik-medium text-black-300 ${textStyle}`}>{title}</Text>
+    </View>
+
+    {showArrow && <Image source={icons.rightArrow} className="size-5" />}
+  </TouchableOpacity>
+)
+
+const Profile = () => {
   const { logout, user } = useAuthStore()
 
   const handleLogout = () => {
     logout()
+    Alert.alert("Success", "Logged out successfully")
     router.replace("/sign-in")
   }
 
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-3xl font-rubik-bold text-black-300">Profile</Text>
-
-      {user && (
-        <View className="items-center">
-          {user.avatar && <Image source={user.avatar} className="w-24 h-24 rounded-full mb-4" resizeMode="cover" />}
-          <Text className="text-lg font-rubik-medium text-black-200">Welcome, {user.name}!</Text>
-          <Text className="text-sm font-rubik text-gray-500">User ID: {user.id}</Text>
+    <SafeAreaView className="h-full pt-16 bg-white">
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-32 px-7">
+        <View className="flex flex-row items-center justify-between mt-5">
+          <Text className="text-xl font-rubik-bold">Profile</Text>
+          <Image source={icons.bell} className="size-5" />
         </View>
-      )}
 
-      <Button title="Sign Out" onPress={handleLogout} color="#ff4444" />
-    </View>
+        <View className="flex flex-row justify-center mt-5">
+          <View className="flex flex-col items-center relative mt-5">
+            <Image source={user?.avatar} className="size-32 relative rounded-full" />
+            <TouchableOpacity className="absolute bottom-10 right-10">
+              <Image source={icons.edit} className="size-6" />
+            </TouchableOpacity>
+
+            <Text className="text-2xl font-rubik-bold mt-4">{user?.name}</Text>
+          </View>
+        </View>
+
+        <View className="flex flex-col mt-10">
+          <SettingsItem icon={icons.calendar} title="My Bookings" />
+          <SettingsItem icon={icons.wallet} title="Payments" />
+        </View>
+
+        <View className="flex flex-col mt-5 border-t pt-5 border-primary-200">
+          {settings.slice(2).map((item, index) => (
+            <SettingsItem key={index} {...item} />
+          ))}
+        </View>
+
+        <View className="flex flex-col border-t mt-5 pt-5 border-primary-200">
+          <SettingsItem
+            icon={icons.logout}
+            title="Logout"
+            textStyle="text-danger"
+            showArrow={false}
+            onPress={handleLogout}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
+
+export default Profile

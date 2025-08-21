@@ -2,9 +2,10 @@ import { ExploreCard } from "@/components/cards"
 import { FilterBottomSheet } from "@/components/FilterBottomSheet"
 import Filters from "@/components/filters"
 import Search from "@/components/search"
+import icons from "@/constants/icons"
 import { useAuthStore } from "@/stores/authStore"
 import { useState } from "react"
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 
 const Explore = () => {
   const { user } = useAuthStore()
@@ -30,6 +31,10 @@ const Explore = () => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View className="px-5">
+            <View className="flex flex-row items-center justify-between mt-5">
+              <Text className="text-xl font-rubik-bold">Explore</Text>
+              <Image source={icons.bell} className="size-5" />
+            </View>
             <Search onFilterPress={() => setIsFilterOpen(true)} />
 
             <View className="my-5">

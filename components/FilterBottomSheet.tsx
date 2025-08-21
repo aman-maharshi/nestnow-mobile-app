@@ -13,7 +13,7 @@ interface FilterBottomSheetProps {
 export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: FilterBottomSheetProps) => {
   // Bottom sheet ref and snap points
   const bottomSheetRef = useRef<BottomSheet>(null)
-  const snapPoints = useMemo(() => ["60%", "80%", "100%"], [])
+  const snapPoints = useMemo(() => ["70%", "80%", "90%"], [])
 
   // State for filter values
   const [filters, setFilters] = useState({
@@ -92,8 +92,8 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 9999,
-        elevation: 9999
+        zIndex: 99999,
+        elevation: 99999
       }}
     >
       <BottomSheet
@@ -103,6 +103,10 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
         enablePanDownToClose={true}
         backdropComponent={renderBackdrop}
         onClose={handleClose}
+        style={{ zIndex: 99999 }}
+        android_keyboardInputMode="adjustResize"
+        keyboardBehavior="interactive"
+        keyboardBlurBehavior="restore"
       >
         <BottomSheetView className="flex-1 px-5">
           {/* Header */}
@@ -121,7 +125,10 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
 
           {/* Price Range */}
           <View className="mb-6">
-            <Text className="text-lg font-rubik-bold text-gray-800 mb-4">Price Range</Text>
+            <View className="flex-row items-center justify-between mb-4">
+              <Text className="text-lg font-rubik-bold text-gray-800">Price Range</Text>
+              <Text className="text-lg font-rubik-bold text-primary-300">${filters.price}</Text>
+            </View>
             <View className="relative">
               <Slider
                 style={{ width: "100%", height: 40 }}
@@ -133,11 +140,6 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
                 maximumTrackTintColor="#e5e7eb"
                 thumbTintColor="#0061ff"
               />
-
-              {/* Price value */}
-              <View className="flex-row justify-center mt-2">
-                <Text className="text-lg font-rubik-bold text-gray-800">${filters.price}</Text>
-              </View>
             </View>
           </View>
 
@@ -214,7 +216,10 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
 
           {/* Building Size */}
           <View className="mb-8">
-            <Text className="text-lg font-rubik-bold text-gray-800 mb-4">Building Size</Text>
+            <View className="flex-row items-center justify-between mb-4">
+              <Text className="text-lg font-rubik-bold text-gray-800">Building Size</Text>
+              <Text className="text-lg font-rubik-bold text-primary-300">{filters.buildingSize} sq ft</Text>
+            </View>
             <View className="relative">
               <Slider
                 style={{ width: "100%", height: 40 }}
@@ -226,16 +231,11 @@ export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: Filter
                 maximumTrackTintColor="#e5e7eb"
                 thumbTintColor="#0061ff"
               />
-
-              {/* Size value */}
-              <View className="flex-row justify-center mt-2">
-                <Text className="text-lg font-rubik-bold text-gray-800">{filters.buildingSize} sq ft</Text>
-              </View>
             </View>
           </View>
 
           {/* Set Filter Button */}
-          <TouchableOpacity onPress={handleApplyFilters} className="bg-primary-300 py-4 rounded-xl mb-4">
+          <TouchableOpacity onPress={handleApplyFilters} className="bg-primary-300 py-4 rounded-full mb-4">
             <Text className="text-white text-center font-rubik-bold text-lg">Set Filter</Text>
           </TouchableOpacity>
         </BottomSheetView>
