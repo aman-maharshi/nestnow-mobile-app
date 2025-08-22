@@ -8,7 +8,17 @@ interface Props {
   onPress?: () => void
 }
 
-export const ExploreCard = ({ onPress }: Props) => {
+interface CardData {
+  id: number
+  title: string
+  location: string
+  price: string
+  rating: number
+  image: any
+  category: string
+}
+
+export const ExploreCard = ({ onPress, data }: Props & { data: CardData }) => {
   const handlePress = () => {
     if (onPress) {
       onPress()
@@ -24,12 +34,12 @@ export const ExploreCard = ({ onPress }: Props) => {
     >
       {/* Left Section - Image */}
       <View className="relative">
-        <Image source={images.newYork} className="w-28 h-28 rounded-lg" />
+        <Image source={data.image} className="w-28 h-28 rounded-lg" />
 
         {/* Rating Overlay */}
         <View className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full flex-row items-center">
           <Image source={icons.star} className="w-3 h-3" tintColor="#FFD700" />
-          <Text className="text-xs font-rubik-bold text-primary-300 ml-1">4.8</Text>
+          <Text className="text-xs font-rubik-bold text-primary-300 ml-1">{data.rating}</Text>
         </View>
       </View>
 
@@ -38,11 +48,11 @@ export const ExploreCard = ({ onPress }: Props) => {
         <View className="flex-1 flex flex-col justify-between">
           {/* Title */}
           <Text className="text-xl font-rubik-semibold text-black-300 leading-7" numberOfLines={2}>
-            Lucky Lake Apartments
+            {data.title}
           </Text>
 
           {/* Location */}
-          <Text className="text-base font-rubik text-black-200">Beijing, China</Text>
+          <Text className="text-base font-rubik text-black-200">{data.location}</Text>
         </View>
 
         {/* Bottom Row - Price and Favorite */}
@@ -50,14 +60,14 @@ export const ExploreCard = ({ onPress }: Props) => {
           <TouchableOpacity className="p-1">
             <Image source={icons.heart} className="w-5 h-5" tintColor="#9CA3AF" />
           </TouchableOpacity>
-          <Text className="text-xl font-rubik-bold text-primary-300">$1234</Text>
+          <Text className="text-xl font-rubik-bold text-primary-300">{data.price}</Text>
         </View>
       </View>
     </TouchableOpacity>
   )
 }
 
-export const FeaturedCard = ({ onPress }: Props) => {
+export const FeaturedCard = ({ onPress, data }: Props & { data: CardData }) => {
   const handlePress = () => {
     if (onPress) {
       onPress()
@@ -68,22 +78,22 @@ export const FeaturedCard = ({ onPress }: Props) => {
 
   return (
     <TouchableOpacity onPress={handlePress} className="flex flex-col items-start w-60 h-80 relative">
-      <Image source={images.japan} className="size-full rounded-2xl" />
+      <Image source={data.image} className="size-full rounded-2xl" />
       <Image source={images.cardGradient} className="size-full rounded-2xl absolute bottom-0" />
 
       <View className="absolute top-5 right-5 flex flex-row items-center gap-2 bg-white/90 px-2 py-1 rounded-full">
         <Image source={icons.star} className="size-3.5" />
-        <Text className="text-sm font-rubik-bold text-primary-300">4.4</Text>
+        <Text className="text-sm font-rubik-bold text-primary-300">{data.rating}</Text>
       </View>
 
       <View className="flex flex-col items-start absolute bottom-5 inset-x-5">
         <Text numberOfLines={1} className="text-white text-lg font-rubik-extrabold">
-          Modern Appartment
+          {data.title}
         </Text>
-        <Text className="text-white text-base font-rubik">22 W 15th St, New York</Text>
+        <Text className="text-white text-base font-rubik">{data.location}</Text>
 
         <View className="flex flex-row items-center justify-between w-full">
-          <Text className="text-xl font-rubik-bold text-white">$2,500</Text>
+          <Text className="text-xl font-rubik-bold text-white">{data.price}</Text>
           <Image source={icons.heart} className="size-5" />
         </View>
       </View>
@@ -91,7 +101,7 @@ export const FeaturedCard = ({ onPress }: Props) => {
   )
 }
 
-export const Card = ({ onPress }: Props) => {
+export const Card = ({ onPress, data }: Props & { data: CardData }) => {
   const handlePress = () => {
     if (onPress) {
       onPress()
@@ -107,17 +117,17 @@ export const Card = ({ onPress }: Props) => {
     >
       <View className="absolute top-5 right-5 flex flex-row items-center px-2 bg-white/90 py-1 rounded-full z-50">
         <Image source={icons.star} className="size-2.5" />
-        <Text className="text-sm font-rubik-bold text-primary-300 ml-0.5">4.4</Text>
+        <Text className="text-sm font-rubik-bold text-primary-300 ml-0.5">{data.rating}</Text>
       </View>
 
-      <Image source={images.newYork} className="h-40 w-full rounded-lg" />
+      <Image source={data.image} className="h-40 w-full rounded-lg" />
 
       <View className="flex flex-col mt-2">
-        <Text className="text-base font-rubik-bold text-black-300">Cozy Studio</Text>
-        <Text className="text-sm font-rubik text-black-200">22 W 15th St, New York</Text>
+        <Text className="text-base font-rubik-bold text-black-300">{data.title}</Text>
+        <Text className="text-sm font-rubik text-black-200">{data.location}</Text>
 
         <View className="flex flex-row items-center justify-between mt-2">
-          <Text className="text-base font-rubik-bold text-primary-300">$2,500</Text>
+          <Text className="text-base font-rubik-bold text-primary-300">{data.price}</Text>
           <Image source={icons.heart} className="w-5 h-5 mr-2" tintColor="#191d31" />
         </View>
       </View>
