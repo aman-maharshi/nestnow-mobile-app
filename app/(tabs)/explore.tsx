@@ -21,7 +21,7 @@ const Explore = () => {
   }
 
   return (
-    <SafeAreaView className="h-full pt-16 bg-[#f6f6f6]">
+    <SafeAreaView className="h-full bg-[#f6f6f6]">
       <FlatList
         data={allProperties}
         renderItem={({ item }) => <ExploreCard data={item} />}

@@ -22,7 +22,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView className="h-full pt-16 bg-white">
+    <SafeAreaView className="h-full bg-white">
       <FlatList
         data={ourRecommendation}
         renderItem={({ item }) => <Card data={item} />}
