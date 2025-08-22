@@ -1,7 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router"
 import { Dimensions, FlatList, Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native"
 
-import Comment from "@/components/Comment"
 import { facilities } from "@/constants/data"
 import icons from "@/constants/icons"
 import images from "@/constants/images"
@@ -70,7 +69,7 @@ const Property = () => {
               top: Platform.OS === "ios" ? 70 : 20
             }}
           >
-            <View className="flex flex-row items-center w-full justify-between pt-10">
+            <View className="flex flex-row items-center w-full justify-between">
               <TouchableOpacity
                 onPress={() => router.back()}
                 className="flex flex-row bg-primary-200 rounded-full size-11 items-center justify-center"
@@ -223,7 +222,7 @@ const Property = () => {
                       <Text className="text-sm font-rubik-bold text-primary-300">{item.rating}</Text>
                     </View>
                   </View>
-                  <Text className="text-sm font-rubik text-black-200">{item.comment}</Text>
+                  <Text className="text-sm font-rubik text-black-200">{item.review}</Text>
                 </View>
               ))}
             </View>
