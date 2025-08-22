@@ -33,7 +33,7 @@ const Explore = () => {
           <View className="px-5">
             <View className="flex flex-row items-center justify-between mt-5">
               <Text className="text-xl font-rubik-bold">Explore</Text>
-              <Image source={icons.bell} className="size-5" />
+              <Image source={icons.bell} className="size-6" />
             </View>
             <Search onFilterPress={() => setIsFilterOpen(true)} />
 

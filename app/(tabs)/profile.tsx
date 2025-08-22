@@ -30,13 +30,13 @@ const Profile = () => {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-32 px-7">
         <View className="flex flex-row items-center justify-between mt-5">
           <Text className="text-xl font-rubik-bold">Profile</Text>
-          <Image source={icons.bell} className="size-5" />
+          <Image source={icons.bell} className="size-6" />
         </View>
 
         <View className="flex flex-row justify-center mt-5">
           <View className="flex flex-col items-center relative mt-5">
             <Image source={user?.avatar} className="size-32 relative rounded-full" />
-            <TouchableOpacity className="absolute bottom-10 right-10">
+            <TouchableOpacity className="absolute bottom-11 right-11">
               <Image source={icons.edit} className="size-6" />
             </TouchableOpacity>
 
