@@ -8,16 +8,6 @@ interface Props {
   onPress?: () => void
 }
 
-interface CardData {
-  id: number
-  title: string
-  location: string
-  price: string
-  rating: number
-  image: any
-  category: string
-}
-
 export const ExploreCard = ({ onPress, data }: Props & { data: CardData }) => {
   const handlePress = () => {
     if (onPress) {

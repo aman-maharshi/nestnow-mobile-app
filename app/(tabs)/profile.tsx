@@ -1,17 +1,9 @@
-import { Alert, Image, ImageSourcePropType, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Alert, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
 
 import { settings } from "@/constants/data"
 import icons from "@/constants/icons"
 import { useAuthStore } from "@/stores/authStore"
 import { router } from "expo-router"
-
-interface SettingsItemProp {
-  icon: ImageSourcePropType
-  title: string
-  onPress?: () => void
-  textStyle?: string
-  showArrow?: boolean
-}
 
 const SettingsItem = ({ icon, title, onPress, textStyle, showArrow = true }: SettingsItemProp) => (
   <TouchableOpacity onPress={onPress} className="flex flex-row items-center justify-between py-3">

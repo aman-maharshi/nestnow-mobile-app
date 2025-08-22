@@ -1,15 +1,6 @@
 import images from "@/constants/images"
 import { create } from "zustand"
 
-interface AuthState {
-  isAuthenticated: boolean
-  isLoading: boolean
-  user: any | null
-  login: () => Promise<void>
-  logout: () => void
-  setLoading: (loading: boolean) => void
-}
-
 export const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: false,
   isLoading: false,

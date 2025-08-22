@@ -4,12 +4,6 @@ import Slider from "@react-native-community/slider"
 import React, { useCallback, useMemo, useRef, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 
-interface FilterBottomSheetProps {
-  isVisible: boolean
-  onClose: () => void
-  onApplyFilters?: (filters: any) => void
-}
-
 export const FilterBottomSheet = ({ isVisible, onClose, onApplyFilters }: FilterBottomSheetProps) => {
   // Bottom sheet ref and snap points
   const bottomSheetRef = useRef<BottomSheet>(null)
