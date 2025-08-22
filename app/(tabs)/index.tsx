@@ -26,7 +26,7 @@ const HomeScreen = () => {
       <FlatList
         data={ourRecommendation}
         renderItem={({ item }) => <Card data={item} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         numColumns={2}
         contentContainerClassName="pb-32"
         columnWrapperClassName="px-5 flex gap-5"
@@ -57,7 +57,7 @@ const HomeScreen = () => {
               <FlatList
                 data={featured}
                 renderItem={({ item }) => <FeaturedCard data={item} />}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={item => item.id}
                 horizontal={true}
                 bounces={false}
                 showsHorizontalScrollIndicator={false}

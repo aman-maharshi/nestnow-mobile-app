@@ -25,7 +25,7 @@ const Explore = () => {
       <FlatList
         data={allProperties}
         renderItem={({ item }) => <ExploreCard data={item} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         numColumns={1}
         contentContainerClassName="pb-32"
         showsVerticalScrollIndicator={false}

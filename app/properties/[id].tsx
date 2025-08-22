@@ -1,58 +1,27 @@
 import { router, useLocalSearchParams } from "expo-router"
 import { Dimensions, FlatList, Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native"
 
-import { facilities } from "@/constants/data"
+import { allProperties, facilities } from "@/constants/data"
 import icons from "@/constants/icons"
 import images from "@/constants/images"
 
-// Dummy property data
-const property = {
-  id: "1",
-  name: "Modern Downtown Apartment",
-  type: "Apartment",
-  price: 2500,
-  rating: 4.8,
-  bedrooms: 2,
-  bathrooms: 2,
-  area: 1200,
-  image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
-  description:
-    "Beautiful modern apartment located in the heart of downtown. This spacious 2-bedroom apartment features contemporary design, high ceilings, and stunning city views. Perfect for young professionals or small families looking for a convenient urban lifestyle.",
-  address: "123 Main Street, Downtown, City, State 12345",
-  agent: {
-    name: "Sarah Johnson",
-    email: "sarah.johnson@nestnow.com",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
-  },
-  facilities: ["WiFi", "Parking", "Gym", "Pool", "Laundry", "Pet Friendly"],
-  gallery: [
-    { $id: "1", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=400&fit=crop" },
-    { $id: "2", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=400&fit=crop" },
-    { $id: "3", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=400&fit=crop" },
-    { $id: "4", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=400&fit=crop" }
-  ],
-  reviews: [
-    {
-      $id: "1",
-      user: "Mike Smith",
-      rating: 5,
-      review: "Amazing apartment! The location is perfect and the amenities are top-notch. Highly recommend!",
-      date: "2024-01-15",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
-    },
-    {
-      $id: "2",
-      user: "Emily Davis",
-      rating: 4,
-      review: "Great place to live. The building is well-maintained and the staff is friendly.",
-      date: "2024-01-10",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
-    }
-  ]
-}
-
 const Property = () => {
   const { id } = useLocalSearchParams<{ id?: string }>()
+
+  // Find the property based on the ID parameter
+  const property = allProperties.find(prop => prop.id === id)
+
+  // If property not found, show error or redirect
+  if (!property) {
+    return (
+      <View className="flex-1 items-center justify-center bg-white">
+        <Text className="text-xl font-rubik-bold text-black-300">Property not found</Text>
+        <TouchableOpacity onPress={() => router.back()} className="mt-4 px-6 py-3 bg-primary-300 rounded-full">
+          <Text className="text-white font-rubik-bold">Go Back</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
   const windowHeight = Dimensions.get("window").height
 
@@ -60,7 +29,7 @@ const Property = () => {
     <View>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-32 bg-white">
         <View className="relative w-full" style={{ height: windowHeight / 2 }}>
-          <Image source={{ uri: property.image }} className="size-full" resizeMode="cover" />
+          <Image source={property.image} className="size-full" resizeMode="cover" />
           <Image source={images.whiteGradient} className="absolute top-0 w-full z-40" />
 
           <View

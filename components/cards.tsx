@@ -8,12 +8,12 @@ interface Props {
   onPress?: () => void
 }
 
-export const ExploreCard = ({ onPress, data }: Props & { data: CardData }) => {
+export const ExploreCard = ({ onPress, data }: Props & { data: PropertyData }) => {
   const handlePress = () => {
     if (onPress) {
       onPress()
     } else {
-      router.push("/properties/1")
+      router.push(`/properties/${data.id}`)
     }
   }
 
@@ -38,11 +38,11 @@ export const ExploreCard = ({ onPress, data }: Props & { data: CardData }) => {
         <View className="flex-1 flex flex-col justify-between">
           {/* Title */}
           <Text className="text-xl font-rubik-semibold text-black-300 leading-7" numberOfLines={2}>
-            {data.title}
+            {data.name}
           </Text>
 
           {/* Location */}
-          <Text className="text-base font-rubik text-black-200">{data.location}</Text>
+          <Text className="text-base font-rubik text-black-200">{data.address}</Text>
         </View>
 
         {/* Bottom Row - Price and Favorite */}
@@ -50,19 +50,19 @@ export const ExploreCard = ({ onPress, data }: Props & { data: CardData }) => {
           <TouchableOpacity className="p-1">
             <Image source={icons.heart} className="w-5 h-5" tintColor="#9CA3AF" />
           </TouchableOpacity>
-          <Text className="text-xl font-rubik-bold text-primary-300">{data.price}</Text>
+          <Text className="text-xl font-rubik-bold text-primary-300">${data.price}</Text>
         </View>
       </View>
     </TouchableOpacity>
   )
 }
 
-export const FeaturedCard = ({ onPress, data }: Props & { data: CardData }) => {
+export const FeaturedCard = ({ onPress, data }: Props & { data: PropertyData }) => {
   const handlePress = () => {
     if (onPress) {
       onPress()
     } else {
-      router.push("/properties/1")
+      router.push(`/properties/${data.id}`)
     }
   }
 
@@ -78,12 +78,12 @@ export const FeaturedCard = ({ onPress, data }: Props & { data: CardData }) => {
 
       <View className="flex flex-col items-start absolute bottom-5 inset-x-5">
         <Text numberOfLines={1} className="text-white text-lg font-rubik-extrabold">
-          {data.title}
+          {data.name}
         </Text>
-        <Text className="text-white text-base font-rubik">{data.location}</Text>
+        <Text className="text-white text-base font-rubik">{data.address}</Text>
 
         <View className="flex flex-row items-center justify-between w-full">
-          <Text className="text-xl font-rubik-bold text-white">{data.price}</Text>
+          <Text className="text-xl font-rubik-bold text-white">${data.price}</Text>
           <Image source={icons.heart} className="size-5" />
         </View>
       </View>
@@ -91,12 +91,12 @@ export const FeaturedCard = ({ onPress, data }: Props & { data: CardData }) => {
   )
 }
 
-export const Card = ({ onPress, data }: Props & { data: CardData }) => {
+export const Card = ({ onPress, data }: Props & { data: PropertyData }) => {
   const handlePress = () => {
     if (onPress) {
       onPress()
     } else {
-      router.push("/properties/1")
+      router.push(`/properties/${data.id}`)
     }
   }
 
@@ -113,11 +113,11 @@ export const Card = ({ onPress, data }: Props & { data: CardData }) => {
       <Image source={data.image} className="h-40 w-full rounded-lg" />
 
       <View className="flex flex-col mt-2">
-        <Text className="text-base font-rubik-bold text-black-300">{data.title}</Text>
-        <Text className="text-sm font-rubik text-black-200">{data.location}</Text>
+        <Text className="text-base font-rubik-bold text-black-300">{data.name}</Text>
+        <Text className="text-sm font-rubik text-black-200">{data.address}</Text>
 
         <View className="flex flex-row items-center justify-between mt-2">
-          <Text className="text-base font-rubik-bold text-primary-300">{data.price}</Text>
+          <Text className="text-base font-rubik-bold text-primary-300">${data.price}</Text>
           <Image source={icons.heart} className="w-5 h-5 mr-2" tintColor="#191d31" />
         </View>
       </View>
