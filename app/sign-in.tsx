@@ -1,5 +1,5 @@
-import React from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import React, { useState } from "react"
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import icons from "@/constants/icons"
@@ -9,20 +9,40 @@ import { useAuthStore } from "../stores/authStore"
 
 const SignIn = () => {
   const { login, isLoading } = useAuthStore()
+  const [hasError, setHasError] = useState(false)
 
   const handleLogin = async () => {
     try {
+      setHasError(false)
       await login()
       router.replace("/(tabs)")
     } catch (error) {
       console.error("Authentication failed:", error)
+      setHasError(true)
+      Alert.alert("Login Failed", "Please try again later.")
     }
+  }
+
+  // Check if required assets exist
+  if (!icons?.google || !images?.onboarding) {
+    return (
+      <SafeAreaView className="h-full bg-white">
+        <View className="flex-1 items-center justify-center">
+          <Text className="text-lg font-rubik-bold text-black-300">Loading...</Text>
+        </View>
+      </SafeAreaView>
+    )
   }
 
   return (
     <SafeAreaView className="h-full bg-white">
       <ScrollView contentContainerClassName="grow">
-        <Image source={images.onboarding} className="w-full h-[500px]" resizeMode="cover" />
+        <Image
+          source={images.onboarding}
+          className="w-full h-[500px]"
+          resizeMode="cover"
+          onError={() => setHasError(true)}
+        />
 
         <View className="px-10">
           <Text className="text-center font-rubik uppercase text-black-200">Welcome to Restate</Text>
@@ -46,6 +66,12 @@ const SignIn = () => {
               </Text>
             </View>
           </TouchableOpacity>
+
+          {hasError && (
+            <Text className="text-center mt-4 text-sm font-rubik text-red-500">
+              Something went wrong. Please try again.
+            </Text>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

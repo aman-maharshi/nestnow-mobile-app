@@ -1,4 +1,4 @@
-import { Alert, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
 
 import { settings } from "@/constants/data"
 import icons from "@/constants/icons"
@@ -21,7 +21,6 @@ const Profile = () => {
 
   const handleLogout = () => {
     logout()
-    Alert.alert("Success", "Logged out successfully")
     router.replace("/sign-in")
   }
 
